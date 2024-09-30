@@ -14,7 +14,7 @@ public class Element {
 		this.similarite=similarite;
 	}
 	
-	public int get.etat(){
+	public int getEtat(){
 		return etat;
 	}
 	
