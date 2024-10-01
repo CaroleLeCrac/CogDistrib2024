@@ -6,7 +6,7 @@ https://www.guillaumegronier.com/cv/resources/4.Attention.pdf
 Théorie de Treissman : https://cours-psycho.com/2008/01/theorie-de-treissman/
 
 Paramètre pris en compte (VIs): 
-  - Nombre de distracteurs (modalité : 5, 10, 15)
+  - Nombre de distracteurs (modalité : 5, 15, 30)
   - Similarité distracteurs/cible (modalité : très similaire, un peu similaire)
 
 Mesure faites (VD) : 
