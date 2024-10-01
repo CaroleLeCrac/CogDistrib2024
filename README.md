@@ -1,7 +1,7 @@
 # CogDistrib2024
 Projet Cognition distribué 2024
 Modèlisé le temps de détection d'une cible parmis des distracteur. 
-Processus attentionnel lors de la recherche d'une cible. (effet pop-out ou rechercher attentionnel) 
+Processus attentionnel lors de la recherche d'une cible. (effet pop-out ou rechercher attentionnel) Traitement pré-attentionnel ou traitement attentionnel
 https://www.guillaumegronier.com/cv/resources/4.Attention.pdf 
 Théorie de Treissman : https://cours-psycho.com/2008/01/theorie-de-treissman/
 
