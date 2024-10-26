@@ -8,7 +8,7 @@ public class Grille {
 	private final static int taille=10; 
 	private int[][] grille; // 2 = distracteur, 1 = cible, 0 = aucun élément
 	private final int nbrDistracteurs; // 5 ou 15 ou 30
-	private final int similariteElements; // 0 = peu similaires, 1 = une caractéristique en commun, 2 = très similaires
+	private final int similariteElements; // 0 = peu similaires, 1 = très similaires
 	// correspond à la similarité entre les distracteurs et la cible
 	private final boolean presence; //est-ce utile sachant que la cible est tjs présente ? 
 	
@@ -58,7 +58,7 @@ public class Grille {
 	}
 
 	private boolean contient(int[][] tab, int ligne, int colonne) {
-		//return true si tab contient valeur
+		//return true si tab contient les couples de valeurs ligne et colonne
 		boolean res=false;
         for (int[] tab1 : tab) {
                 if (tab1[0] == ligne && tab1[1] == colonne) {
@@ -76,8 +76,6 @@ public class Grille {
 		if(similariteElements==0)
 			res+="sont peu similaires à ";
 		if (similariteElements==1)
-			res+="ont une caractéristique en commun avec ";
-		if (similariteElements==2)
 			res+="sont très similaires à ";
 		res+="la cible.\nVoici la grille :\n";
 		for (int i=0; i<taille; i++) {
@@ -90,7 +88,7 @@ public class Grille {
 	}
 	
 	public static void main(String[] args) {
-		Grille grille = new Grille(30,2);
+		Grille grille = new Grille(30,1);
 		System.out.println(grille);
 	}
 }
