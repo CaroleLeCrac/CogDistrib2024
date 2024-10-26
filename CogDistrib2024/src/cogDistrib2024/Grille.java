@@ -5,27 +5,49 @@ package cogDistrib2024;
 */
 
 public class Grille {
-	private final static int taille=10; 
-	private int[][] grille; // 2 = distracteur, 1 = cible, 0 = aucun élément
+	private final static int TAILLE = 10; 
+	private final int[][] grille; // 2 = distracteur, 1 = cible, 0 = aucun élément
 	private final int nbrDistracteurs; // 5 ou 15 ou 30
 	private final int similariteElements; // 0 = peu similaires, 1 = très similaires
 	// correspond à la similarité entre les distracteurs et la cible
+	private final int[][] indiceCible;
+	private final int[][] indicesDistracteurs;
 	private final boolean presence; //est-ce utile sachant que la cible est tjs présente ? 
 	
 	public Grille(int nbrDistracteurs, int similariteElements) {
-		grille= new int[taille][taille];
+		grille= new int[TAILLE][TAILLE];
 		this.nbrDistracteurs=nbrDistracteurs;
 		this.similariteElements=similariteElements;
 		presence=true;
-		initialisationGrille();
+		indiceCible = indiceCible();
+		indicesDistracteurs = indicesDistracteurs(indiceCible);
+		initialisationGrille(indiceCible, indicesDistracteurs);
 	}
 
-	private void initialisationGrille() {
+	public int getTaille() {
+		return TAILLE;
+	}
+
+	public int[][] getGrille() {
+		return grille;
+	}
+
+	public int getNbDistracteurs() {
+		return nbrDistracteurs;
+	}
+
+	public int getSimilarite() {
+		return similariteElements;
+	}
+
+	public boolean estCible(int[][] indice) {
+		return (indice == indiceCible);
+	}
+
+	private void initialisationGrille(int[][] indiceCible, int[][] indicesDistracteurs) {
 		//initialisation de la grille
-		int[][] indiceCible=indiceCible();
-		int[][] indicesDistracteurs=indicesDistracteurs(indiceCible);
-		for (int i=0; i<taille; i++) {
-			for (int j=0; j<taille; j++) {
+		for (int i=0; i<TAILLE; i++) {
+			for (int j=0; j<TAILLE; j++) {
 				if (i==indiceCible[0][0] && j==indiceCible[0][1])
 					grille[i][j]=1; //cible
 				else if(contient(indicesDistracteurs,i,j))
@@ -36,25 +58,25 @@ public class Grille {
 
 	private int[][] indicesDistracteurs(int[][] indiceCible){
 		//création aléatoire des indices des distracteurs
-		int[][] indicesDistracteurs = new int[nbrDistracteurs][2];
+		int[][] indicesDistracteursTemp = new int[nbrDistracteurs][2];
 		for (int i=0; i<nbrDistracteurs; i++) {
 			int indiceLigne, indiceColonne;
 			do { 
-				indiceLigne=(int)(Math.random()*taille);
-				indiceColonne=(int)(Math.random()*taille);
-			}while (contient(indicesDistracteurs,indiceLigne, indiceColonne) || contient(indiceCible,indiceLigne,indiceColonne));
-			indicesDistracteurs[i][0]=indiceLigne;
-			indicesDistracteurs[i][1]=indiceColonne;
+				indiceLigne=(int)(Math.random()*TAILLE);
+				indiceColonne=(int)(Math.random()*TAILLE);
+			}while (contient(indicesDistracteursTemp,indiceLigne, indiceColonne) || contient(indiceCible,indiceLigne,indiceColonne));
+			indicesDistracteursTemp[i][0]=indiceLigne;
+			indicesDistracteursTemp[i][1]=indiceColonne;
 		}
-		return indicesDistracteurs;
+		return indicesDistracteursTemp;
 	}
 
 	private int[][] indiceCible() {	
 		//création aléatoire des indices de la cible
-		int[][] indiceCible = new int[1][2];
-		indiceCible[0][0]=(int)(Math.random()*taille);
-		indiceCible[0][1]=(int)(Math.random()*taille);
-		return indiceCible;
+		int[][] indiceCibleTemp = new int[1][2];
+		indiceCibleTemp[0][0]=(int)(Math.random()*TAILLE);
+		indiceCibleTemp[0][1]=(int)(Math.random()*TAILLE);
+		return indiceCibleTemp;
 	}
 
 	private boolean contient(int[][] tab, int ligne, int colonne) {
@@ -78,8 +100,8 @@ public class Grille {
 		if (similariteElements==1)
 			res+="sont très similaires à ";
 		res+="la cible.\nVoici la grille :\n";
-		for (int i=0; i<taille; i++) {
-			for (int j=0; j<taille; j++) {
+		for (int i=0; i<TAILLE; i++) {
+			for (int j=0; j<TAILLE; j++) {
 				res+=grille[i][j]+" ";
 			}
 			res+="\n";
@@ -88,7 +110,7 @@ public class Grille {
 	}
 	
 	public static void main(String[] args) {
-		Grille grille = new Grille(30,1);
+		Grille grille = new Grille(5,0);
 		System.out.println(grille);
 	}
 }
