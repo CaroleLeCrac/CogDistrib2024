@@ -12,13 +12,11 @@ public class Grille {
 	// correspond à la similarité entre les distracteurs et la cible
 	private final int[][] indiceCible;
 	private final int[][] indicesDistracteurs;
-	private final boolean presence; //est-ce utile sachant que la cible est tjs présente ? 
 	
 	public Grille(int nbrDistracteurs, int similariteElements) {
 		grille= new int[TAILLE][TAILLE];
 		this.nbrDistracteurs=nbrDistracteurs;
 		this.similariteElements=similariteElements;
-		presence=true;
 		indiceCible = indiceCible();
 		indicesDistracteurs = indicesDistracteurs(indiceCible);
 		initialisationGrille(indiceCible, indicesDistracteurs);
@@ -38,6 +36,14 @@ public class Grille {
 
 	public int getSimilarite() {
 		return similariteElements;
+	}
+	
+	public int getContenuCase(int ligne, int colonne) {
+		return grille[ligne][colonne];
+	}
+	
+	public int[][] getCible(){
+		return indiceCible;
 	}
 
 	public boolean estCible(int[][] indice) {
@@ -110,7 +116,7 @@ public class Grille {
 	}
 	
 	public static void main(String[] args) {
-		Grille grille = new Grille(5,0);
+		Grille grille = new Grille(10,0);
 		System.out.println(grille);
 	}
 }
