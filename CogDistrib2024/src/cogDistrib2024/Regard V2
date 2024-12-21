@@ -1,0 +1,87 @@
+package cogDistrib2024;
+
+import java.io.FileWriter;
+import java.io.IOException;
+
+public class Regard {
+    public final static double paramTempsDeReconnaissance = 1; // à mettre en milliseconde quand on aura paramétrer avec les passation
+
+    public static double regardeGrille(int nbrDistracteurs, int similariteElements) {
+        double tempsDeRecherche = 0;
+        Grille grille = new Grille(nbrDistracteurs, similariteElements);
+        if (grille.getSimilarite() == 0) {
+            popOut(grille);
+            return paramTempsDeReconnaissance;
+        } else {
+            for (int i = 0; i != grille.getTaille(); i++) {
+                for (int j = 0; j != grille.getTaille(); j++) {
+                    if (grille.getContenuCase(i, j) == 2) {
+                        tempsDeRecherche += paramTempsDeReconnaissance;
+                    } else if (grille.getContenuCase(i, j) == 1) {
+                        tempsDeRecherche += paramTempsDeReconnaissance;
+                        return tempsDeRecherche;
+                    }
+                }
+            }
+        }
+        return tempsDeRecherche;
+    }
+
+    public static int[][] popOut(Grille grille) {
+        return grille.getCible();
+    }
+
+    public static double moyenneRegardGrille(int nbrDeRepetition, int nbrDistracteurs, int similariteElements) {
+        double tempsMoy = 0;
+        for (int i = 0; i != nbrDeRepetition; i++) {
+            tempsMoy += regardeGrille(nbrDistracteurs, similariteElements);
+        }
+        double resultat = tempsMoy / nbrDeRepetition;
+        System.out.println(resultat);
+        return resultat;
+    }
+
+    //Methode permettant de donner un fichier csv resumant les resultats de la simulation
+    public static void resultatsCSV(String nmFichier, Object[][] resultats) {
+        try (FileWriter writer = new FileWriter(nmFichier)) {
+             writer.append("NbrDeRepetition,NbrDistracteurs,SimilariteElements,TempsMoyen\n");
+
+            for (Object[] ligne : resultats) {
+                writer.append(String.join(",", String.valueOf(ligne[0]), String.valueOf(ligne[1]), String.valueOf(ligne[2]), String.valueOf(ligne[3])));
+                writer.append("\n");
+            }
+
+            System.out.println("Fichier CSV généré : " + nmFichier);
+        } catch (IOException e) {
+            System.err.println("Erreur du fichier CSV : " + e.getMessage());
+        }
+    }
+
+    public static void main(String[] args) {
+        // Configuration des paramètres à tester pour les différentes conditions
+        int[][] configurations = {
+                {30, 5, 1},
+                {30, 10, 1},
+                {30, 15, 1},
+                {30, 5, 0},
+                {30, 10, 0},
+                {30, 15, 0}
+        };
+
+        // Tableau pour stocker les résultats
+        Object[][] resultats = new Object[configurations.length][4];
+
+        // Calcul des résultats pour chaque configuration
+        for (int i = 0; i < configurations.length; i++) {
+            int nbrRepetition = configurations[i][0];
+            int nbrDistracteurs = configurations[i][1];
+            int similariteElements = configurations[i][2];
+
+            double tempsMoyen = moyenneRegardGrille(nbrRepetition, nbrDistracteurs, similariteElements);
+            resultats[i] = new Object[] {nbrRepetition, nbrDistracteurs, similariteElements, tempsMoyen};
+        }
+
+        // Génération du fichier CSV
+        resultatsCSV("resultats.csv", resultats);
+    }
+}
