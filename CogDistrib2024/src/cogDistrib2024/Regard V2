@@ -4,21 +4,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class Regard {
-    public final static double paramTempsDeReconnaissance = 1; // à mettre en milliseconde quand on aura paramétrer avec les passation
+    public final static double paramTempsDeReconnaissanceSimilaire = 0.33; // à mettre en milliseconde quand on aura paramétrer avec les passation
+    public final static double paramTempsDeReconnaissanceDifferent = 0.77; 
 
     public static double regardeGrille(int nbrDistracteurs, int similariteElements) {
         double tempsDeRecherche = 0;
         Grille grille = new Grille(nbrDistracteurs, similariteElements);
         if (grille.getSimilarite() == 0) {
             popOut(grille);
-            return paramTempsDeReconnaissance;
+            return paramTempsDeReconnaissanceDifferent;
         } else {
             for (int i = 0; i != grille.getTaille(); i++) {
                 for (int j = 0; j != grille.getTaille(); j++) {
                     if (grille.getContenuCase(i, j) == 2) {
-                        tempsDeRecherche += paramTempsDeReconnaissance;
+                        tempsDeRecherche += paramTempsDeReconnaissanceSimilaire;
                     } else if (grille.getContenuCase(i, j) == 1) {
-                        tempsDeRecherche += paramTempsDeReconnaissance;
+                        tempsDeRecherche += paramTempsDeReconnaissanceSimilaire;
                         return tempsDeRecherche;
                     }
                 }
